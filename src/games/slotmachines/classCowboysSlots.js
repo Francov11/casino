@@ -31,7 +31,7 @@ var CowboysSlots = /** @class */ (function (_super) {
         var b = Math.floor(Math.random() * this.colors.length);
         var c = Math.floor(Math.random() * this.colors.length);
         if (a === b || a === c) {
-            console.log(a + b + c);
+            console.log('Te toco: ' + this.colors[a] + ' ' + this.colors[b] + ' ' + this.colors[c]);
             console.log('Ganaste');
         }
         else {

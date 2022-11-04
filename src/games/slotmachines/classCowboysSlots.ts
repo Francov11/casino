@@ -16,7 +16,7 @@ export class CowboysSlots extends SlotMachine{
         let c = Math.floor(Math.random() * this.colors.length)
 
         if(a === b || a === c ){
-            console.log(a + b + c)
+            console.log('Te toco: ' + this.colors[a] + ', ' + this.colors[b] + ', ' + this.colors[c])
             console.log('Ganaste')
         } else {
             console.log('Perdiste')

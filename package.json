@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/Francov11/casino/issues"
   },
-  "homepage": "https://github.com/Francov11/casino#readme"
+  "homepage": "https://github.com/Francov11/casino#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9"
+  }
 }
