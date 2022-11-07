@@ -7,33 +7,42 @@ import { Roulette } from "../games/roulette/classRoulette";
 
 export class Casino {
     protected name: string;
-    protected Pirates: PiratesSlots;
-    protected Cowboys: CowboysSlots; 
+
     constructor(pName: string){
         this.name = pName;
     }
 
-    public playSlots(){
-        let option: number = readlineSync.question("Ingrese la Slotmachine que desea jugar: 1: Pirates 2: Cowboys")
+    public getName():string{
+        return this.name;
+    }
+
+    public setName(pName:string):string{
+        return this.name = pName;
+    }
+
+    public playSlots(pirates:PiratesSlots, cowboys:CowboysSlots, betAmount:number):void{
+        let option: number = readlineSync.questionInt("Ingrese la Slotmachine que desea jugar: 1: Pirates 2: Cowboys | ")
         switch(option){
             case 1: {
-                let playBet: number = readlineSync.question("Ingrese la apuesta: ")
-                this.Pirates.play()
+                pirates.playPiratesSlot(betAmount)
                 break;
             }
             case 2: {
-                let playBet: number = readlineSync.question("Ingrese la apuesta: ")
-                this.Cowboys.play()
+                cowboys.playCowboySlot(betAmount) 
                 break;
             }
         }
     }
 
-    public playRoulette(bet:number){
-        
+    public playRoulette(){
+        // Aca va la ruleta
     }
 
-    public playBlackJag(bet:number){
-        
+    public playBlackJag(blackjack:BlackJag, betAmount:number){
+        blackjack.playBlackjack(betAmount)
     }
 }
+
+//fs.readFileSync('./manuales/manualTragamonedasPoderoso.txt', 'utf8');
+//fs.writeFileSync('datosEstadisticosTragamonedasPoderoso.txt', "\n" + "  Datos recolectados" + "\n" +"Tragamonedas Poderoso" + "\n" + "Resultado juego: " + resultado + "\n");
+//console.log(fs.readFileSync('datosEstadisticosTragamonedasPoderoso.txt','utf-8'));
