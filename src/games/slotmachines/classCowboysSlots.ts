@@ -1,43 +1,54 @@
+let readlineSync = require('readline-sync')
+import * as fs from 'fs'
 import { SlotMachine } from "./classSlotMachine";
 
-
 export class CowboysSlots extends SlotMachine{
-    colors: string[]
+    colors: string[];
 
-    constructor(pTheme: string, pBetMin: number, pWinProbability: number, pWinNumbers: number[], pBonus: number, pColors: string[]){
-        super(pTheme, pBetMin, pWinProbability, pWinNumbers, pBonus);
-        this.colors = pColors
+    constructor(pTheme: string, pBetMin: number, pWinProbability: number, pColors: string[]){
+        super(pTheme, pBetMin, pWinProbability);
+        this.colors = pColors;
     };
 
-    testSlot(){
-        this.colors = ['rojo', 'negro', 'blanco', 'violeta', 'celeste']
-        let a = Math.floor(Math.random() * this.colors.length)
-        let b = Math.floor(Math.random() * this.colors.length)
-        let c = Math.floor(Math.random() * this.colors.length)
-
-        if(a === b || a === c ){
-            console.log('Te toco: ' + this.colors[a] + ', ' + this.colors[b] + ', ' + this.colors[c])
-            console.log('Ganaste')
-        } else {
-            console.log('Perdiste')
-        }
+    public getColors():string[]{
+        return this.colors;
     }
 
-    sideBet(pBetMin: number){
-        let x: number = Math.floor(Math.random() * 10)
-        if(x === 4){
-            let cashWin = pBetMin + 1000
-            return console.log('Gano la apuesta secundaria. Gano: ' + cashWin)
+    public setColors(pColors:string[]):string[]{
+        return this.colors = pColors;
+    }
+
+    public playCowboySlot(betAmount:number){
+        this.getColors()
+        console.log(this.colors)
+        let a = Math.floor(Math.random() * this.colors.length);
+        let b = Math.floor(Math.random() * this.colors.length);
+        let c = Math.floor(Math.random() * this.colors.length);
+
+        if(a === b && a === c ){
+            betAmount = betAmount + 500;
+            console.log('Te toco: ' + this.colors[a] + ', ' + this.colors[b] + ', ' + this.colors[c]);            
+            console.log('Ganaste: ' + betAmount);
+            
         } else {
-            let cashLost = pBetMin - pBetMin
-            return console.log('Perdio la apuesta secundaria. Perdio: ' + cashLost)
+            betAmount = betAmount - betAmount
+            console.log('Te toco: ' + this.colors[a] + ', ' + this.colors[b] + ', ' + this.colors[c]);     
+            console.log('Perdiste.');
+        }
+        this.sideBet(betAmount)
+    }
+
+    sideBet(betAmount:number){
+        let x: number = Math.floor(Math.random() * 10);
+        if(x === 4){
+            betAmount = betAmount + 1000;
+            return console.log('Gano la apuesta secundaria. Gano: ' + betAmount);
+        } else {
+            betAmount = betAmount - betAmount;
+            return console.log('Perdio la apuesta secundaria.');
         }
     }
 
 }
 
-let firstCowboySlot = new CowboysSlots('Cowboys', 20, 2, [1,2], 1000, ['rojo', 'negro', 'blanco', 'violeta', 'celeste'])
 
-firstCowboySlot.testSlot()
-
-firstCowboySlot.sideBet(200)

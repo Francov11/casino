@@ -21,7 +21,7 @@ export class Client {
         return this.cashAmount
     }
 
-    public setCashAmount(pCashAmount):number{
-        return this.cashAmount = pCashAmount;
+    public setCashAmount(cash: number):number{
+        return this.cashAmount = cash;
     }
 }

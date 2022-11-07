@@ -1,5 +1,5 @@
-var readlineSync = require('readline-sync')
-
+let readlineSync = require('readline-sync')
+import * as fs from 'fs'
 
 export class BlackJag {
     protected tableNumber: number;
@@ -36,40 +36,52 @@ export class BlackJag {
         return this.privateTable = pPrivateTable;
     }
 
-    public playBlackjack() {
+    public playBlackjack(betAmount:number) {
+        //fs.readFileSync('./information/manual.txt', 'utf-8')
         let cartas:number[] = [1,2,3,4,5,6,7,8,9,10,10,10,10]
         let a = Math.floor(Math.random() * cartas.length)       
         let b = Math.floor(Math.random() * cartas.length)
         let aux: number = a + b
+
+        console.log('Tus puntos: ' + aux)
         
-        if(aux < 21){
-        
-        let option: number = readlineSync.question("aca la pregunta q le haces al usuario") // Aca utlizaria el readline-sink
-        switch(option){ // Utilizar switch dentro del while para poder pedir una carta si suma menos de 21?
+        //if(aux < 21){
+        while(aux<21){
+
+        let option: number = parseInt(readlineSync.question("Ingrese opcion: 1: Hit, 2: Drop.  ") )
+        switch(option){ 
             case 1: {
                 console.log('Hit')
                 let x = Math.floor(Math.random() * cartas.length)
-                aux = a + b + x
-                console.log(aux);
-                if(aux === 21){
-                console.log('Ganaste, sumas: ' + aux)
+                aux = aux + x
+                console.log('Tus puntos 1: ' + aux);
+                if(aux > 21){
+                    betAmount = betAmount - betAmount;
+                    console.log("Perdiste tu apuesta");
+
+                } else if(aux === 21){
+                    betAmount = betAmount + 500;
+                    console.log("Ganaste: $" + betAmount )
                 }
+                //if(aux === 21){
+                //console.log('Ganaste, sumas: ' + aux)
+                //}
                 break;
             }
             case 2: {
                 console.log('Drop')
-                console.log('You lose')
+                console.log('Perdiste tu apuesta')
                 break;
-            }
-        }       
-        }else if(aux === 21){
-            console.log("Ganaste")
+            } break;
+        }   
+    }    
+        /*}else if(aux === 21){
+            betAmount = betAmount + 500;
+            console.log("Ganaste: $" + betAmount )
+            console.log
         }else if(aux > 21){
-            console.log("perdiste");
-        }
+            betAmount = betAmount - betAmount;
+            console.log("Perdiste tu apuesta");
+        }*/
     }
 }
-
-let tableOne = new BlackJag(1, 2, true)
-
-tableOne.playBlackjack()
