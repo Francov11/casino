@@ -1,6 +1,7 @@
 let readlineSync = require('readline-sync')
+
 import { Client } from '../../client/classClient';
-import * as fs from 'fs'
+
 
 export class BlackJag {
     protected tableNumber: number;

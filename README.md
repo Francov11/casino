@@ -28,7 +28,7 @@ Para iniciar el proyecto de manera local, tienes que usar `npm run start`
 
 ## Autores ✒️
 
-* **Franco Velazquez** - [Github](https://gitlab.com/santieb)
+* **Franco Velazquez** - [Github](https://github.com/Francov11)
 * **Joaquin Aquino** - [Github](https://github.com/JoaquinAq)  
 
 ---

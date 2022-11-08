@@ -16,6 +16,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 exports.PiratesSlots = void 0;
+var fs = require('fs');
 var classSlotMachine_1 = require("./classSlotMachine");
 var PiratesSlots = /** @class */ (function (_super) {
     __extends(PiratesSlots, _super);
@@ -24,6 +25,7 @@ var PiratesSlots = /** @class */ (function (_super) {
     }
     ;
     PiratesSlots.prototype.playPiratesSlot = function (betAmount, player) {
+        fs.readFileSync('./data/slotManual.txt', 'utf8');
         if (this.betMin > betAmount) {
             console.log('La apuesta inicial es de: ' + this.betMin);
         }

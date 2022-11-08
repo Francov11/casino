@@ -1,3 +1,4 @@
+const fs = require('fs')
 import { Client } from "../../client/classClient";
 import { SlotMachine } from "./classSlotMachine";
 
@@ -8,6 +9,7 @@ export class PiratesSlots extends SlotMachine{
     };
 
     public playPiratesSlot(betAmount:number, player:Client){
+        fs.readFileSync('./data/slotManual.txt', 'utf8')
         if(this.betMin > betAmount){
             console.log('La apuesta inicial es de: ' + this.betMin)
         } else {
