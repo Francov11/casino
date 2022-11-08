@@ -20,15 +20,19 @@ export class Casino {
         return this.name = pName;
     }
 
-    public playSlots(pirates:PiratesSlots, cowboys:CowboysSlots, betAmount:number):void{
+    public playSlots(pirates:PiratesSlots, cowboys:CowboysSlots, betAmount:number, player:Client):void{
         let option: number = readlineSync.questionInt("Ingrese la Slotmachine que desea jugar: 1: Pirates 2: Cowboys | ")
         switch(option){
             case 1: {
-                pirates.playPiratesSlot(betAmount)
+                pirates.playPiratesSlot(betAmount,player)
                 break;
             }
             case 2: {
-                cowboys.playCowboySlot(betAmount) 
+                cowboys.playCowboySlot(betAmount,player) 
+                break;
+            }
+            default:{
+                console.log('Opcion invalida')
                 break;
             }
         }
@@ -38,8 +42,8 @@ export class Casino {
         // Aca va la ruleta
     }
 
-    public playBlackJag(blackjack:BlackJag, betAmount:number){
-        blackjack.playBlackjack(betAmount)
+    public playBlackJag(blackjack:BlackJag, betAmount:number, player:Client){
+        blackjack.playBlackjack(betAmount,player)
     }
 }
 

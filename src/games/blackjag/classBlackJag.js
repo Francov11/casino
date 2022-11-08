@@ -26,56 +26,55 @@ var BlackJag = /** @class */ (function () {
     BlackJag.prototype.setPrivateTable = function (pPrivateTable) {
         return this.privateTable = pPrivateTable;
     };
-    BlackJag.prototype.playBlackjack = function (client) {
-        var cash = client.getCashAmount();
+    BlackJag.prototype.playBlackjack = function (betAmount, player) {
+        //fs.readFileSync('./information/manual.txt', 'utf-8')
         var cartas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10];
         var a = Math.floor(Math.random() * cartas.length);
         var b = Math.floor(Math.random() * cartas.length);
         var aux = a + b;
         console.log('Tus puntos: ' + aux);
-        //if(aux < 21){
-        while (aux < 21) {
-            var option = parseInt(readlineSync.question("Ingrese opcion: 1: Hit, 2: Drop.  "));
+        if (aux < 21) {
+            var option = readlineSync.questionInt("Ingrese opcion: 1: Hit, 2: Drop | ");
             switch (option) {
                 case 1: {
                     console.log('Hit');
                     var x = Math.floor(Math.random() * cartas.length);
                     aux = aux + x;
-                    console.log('Tus puntos 1: ' + aux);
                     if (aux > 21) {
-                        betAmount = betAmount - betAmount;
-                        console.log("Perdiste tu apuesta");
+                        console.log('Tus puntos: ' + aux);
+                        console.log("Perdiste: $" + betAmount);
+                        player.setCashAmount(player.getCashAmount() - betAmount);
                     }
                     else if (aux === 21) {
-                        betAmount = betAmount + 500;
+                        console.log('Tus puntos: ' + aux);
+                        var result = betAmount * 2;
                         console.log("Ganaste: $" + betAmount);
+                        player.setCashAmount(player.getCashAmount() + result);
                     }
-                    //if(aux === 21){
-                    //console.log('Ganaste, sumas: ' + aux)
-                    //}
                     break;
                 }
-                case 2:
-                    {
-                        console.log('Drop');
-                        console.log('Perdiste tu apuesta');
-                        break;
-                    }
+                case 2: {
+                    console.log('Drop');
+                    console.log('Perdiste: $' + betAmount);
                     break;
+                }
+                default: {
+                    console.log('Opcion invalida.');
+                }
             }
         }
-        /*}else if(aux === 21){
-            betAmount = betAmount + 500;
-            console.log("Ganaste: $" + betAmount )
-            console.log
-        }else if(aux > 21){
-            betAmount = betAmount - betAmount;
-            console.log("Perdiste tu apuesta");
-        }*/
+        else if (aux === 21) {
+            var result = betAmount * 2;
+            player.setCashAmount(player.getCashAmount() + result);
+            console.log('Tus puntos: ' + aux);
+            console.log("Ganaste: $" + result);
+        }
+        else if (aux > 21) {
+            player.setCashAmount(player.getCashAmount() - betAmount);
+            console.log('Tus puntos: ' + aux);
+            console.log("Perdiste: $" + betAmount);
+        }
     };
     return BlackJag;
 }());
 exports.BlackJag = BlackJag;
-//let tableOne = new BlackJag(1, 2, true)
-var betAmount = parseInt(readlineSync.question("Ingrese la apuesta: "));
-//tableOne.playBlackjack()

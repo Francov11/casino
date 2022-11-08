@@ -1,4 +1,5 @@
 let readlineSync = require('readline-sync')
+import { Client } from '../../client/classClient';
 import * as fs from 'fs'
 
 export class BlackJag {
@@ -36,7 +37,7 @@ export class BlackJag {
         return this.privateTable = pPrivateTable;
     }
 
-    public playBlackjack(betAmount:number) {
+    public playBlackjack(betAmount:number, player:Client){
         //fs.readFileSync('./information/manual.txt', 'utf-8')
         let cartas:number[] = [1,2,3,4,5,6,7,8,9,10,10,10,10]
         let a = Math.floor(Math.random() * cartas.length)       
@@ -45,43 +46,44 @@ export class BlackJag {
 
         console.log('Tus puntos: ' + aux)
         
-        //if(aux < 21){
-        while(aux<21){
-
-        let option: number = parseInt(readlineSync.question("Ingrese opcion: 1: Hit, 2: Drop.  ") )
+        if(aux < 21){
+        let option: number = readlineSync.questionInt("Ingrese opcion: 1: Hit, 2: Drop | ")
         switch(option){ 
             case 1: {
                 console.log('Hit')
                 let x = Math.floor(Math.random() * cartas.length)
                 aux = aux + x
-                console.log('Tus puntos 1: ' + aux);
                 if(aux > 21){
-                    betAmount = betAmount - betAmount;
-                    console.log("Perdiste tu apuesta");
+                    console.log('Tus puntos: ' + aux);
+                    console.log("Perdiste: $" + betAmount);
+                    player.setCashAmount(player.getCashAmount() - betAmount)
 
                 } else if(aux === 21){
-                    betAmount = betAmount + 500;
+                    console.log('Tus puntos: ' + aux);
+                    let result:number = betAmount * 2;
                     console.log("Ganaste: $" + betAmount )
+                    player.setCashAmount(player.getCashAmount() + result)
                 }
-                //if(aux === 21){
-                //console.log('Ganaste, sumas: ' + aux)
-                //}
                 break;
             }
             case 2: {
                 console.log('Drop')
-                console.log('Perdiste tu apuesta')
+                console.log('Perdiste: $' + betAmount)
                 break;
-            } break;
+            }
+            default: {
+                console.log('Opcion invalida.')
+            }
         }   
-    }    
-        /*}else if(aux === 21){
-            betAmount = betAmount + 500;
-            console.log("Ganaste: $" + betAmount )
-            console.log
+    }else if(aux === 21){
+        let result:number = betAmount * 2;
+        player.setCashAmount(player.getCashAmount() + result)
+        console.log('Tus puntos: ' + aux);
+        console.log("Ganaste: $" + result )
         }else if(aux > 21){
-            betAmount = betAmount - betAmount;
-            console.log("Perdiste tu apuesta");
-        }*/
+            player.setCashAmount(player.getCashAmount() - betAmount)
+            console.log('Tus puntos: ' + aux);
+            console.log("Perdiste: $" + betAmount);
+        }
     }
 }

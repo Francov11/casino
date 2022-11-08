@@ -23,7 +23,7 @@ var PiratesSlots = /** @class */ (function (_super) {
         return _super.call(this, pTheme, pBetMin, pWinProbability) || this;
     }
     ;
-    PiratesSlots.prototype.playPiratesSlot = function (betAmount) {
+    PiratesSlots.prototype.playPiratesSlot = function (betAmount, player) {
         if (this.betMin > betAmount) {
             console.log('La apuesta inicial es de: ' + this.betMin);
         }
@@ -32,14 +32,15 @@ var PiratesSlots = /** @class */ (function (_super) {
             var b = Math.floor(Math.random() * 11);
             var c = Math.floor(Math.random() * 11);
             if (a === b && a === c) {
-                betAmount = betAmount + 500;
                 console.log('Te toco: ' + a + ', ' + b + ', ' + c);
-                console.log('Ganaste: ' + betAmount);
+                var result = betAmount * 2;
+                console.log('Ganaste: ' + result);
+                player.setCashAmount(player.getCashAmount() + result);
             }
             else {
-                betAmount = betAmount - betAmount;
                 console.log('Te toco: ' + a + ', ' + b + ', ' + c);
                 console.log('Perdiste: ' + betAmount);
+                player.setCashAmount(player.getCashAmount() - betAmount);
             }
         }
     };

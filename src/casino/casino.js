@@ -12,15 +12,19 @@ var Casino = /** @class */ (function () {
     Casino.prototype.setName = function (pName) {
         return this.name = pName;
     };
-    Casino.prototype.playSlots = function (pirates, cowboys, betAmount) {
-        var option = readlineSync.questionInt("Ingrese la Slotmachine que desea jugar: 1: Pirates 2: Cowboys");
+    Casino.prototype.playSlots = function (pirates, cowboys, betAmount, player) {
+        var option = readlineSync.questionInt("Ingrese la Slotmachine que desea jugar: 1: Pirates 2: Cowboys | ");
         switch (option) {
             case 1: {
-                pirates.playPiratesSlot(betAmount);
+                pirates.playPiratesSlot(betAmount, player);
                 break;
             }
             case 2: {
-                cowboys.playCowboySlot(betAmount);
+                cowboys.playCowboySlot(betAmount, player);
+                break;
+            }
+            default: {
+                console.log('Opcion invalida');
                 break;
             }
         }
@@ -28,9 +32,12 @@ var Casino = /** @class */ (function () {
     Casino.prototype.playRoulette = function () {
         // Aca va la ruleta
     };
-    Casino.prototype.playBlackJag = function () {
-        //this.Blackjack.playBlackjack()
+    Casino.prototype.playBlackJag = function (blackjack, betAmount, player) {
+        blackjack.playBlackjack(betAmount, player);
     };
     return Casino;
 }());
 exports.Casino = Casino;
+//fs.readFileSync('./manuales/manualTragamonedasPoderoso.txt', 'utf8');
+//fs.writeFileSync('datosEstadisticosTragamonedasPoderoso.txt', "\n" + "  Datos recolectados" + "\n" +"Tragamonedas Poderoso" + "\n" + "Resultado juego: " + resultado + "\n");
+//console.log(fs.readFileSync('datosEstadisticosTragamonedasPoderoso.txt','utf-8'));
