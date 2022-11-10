@@ -1,0 +1,2 @@
+En este juego ingresas los números que vas a apostar en la ruleta,
+si uno de esos números coincide con el número aleatorio, ganas la apuesta.

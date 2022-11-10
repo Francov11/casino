@@ -1,3 +1,4 @@
+//Clase slotmachine padre
 export class SlotMachine {
     protected theme: string;
     protected betMin: number;

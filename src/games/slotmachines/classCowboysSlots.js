@@ -16,7 +16,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 exports.CowboysSlots = void 0;
+var fs = require('fs');
 var classSlotMachine_1 = require("./classSlotMachine");
+//Clase vaqueros slotmachine
 var CowboysSlots = /** @class */ (function (_super) {
     __extends(CowboysSlots, _super);
     function CowboysSlots(pTheme, pBetMin, pWinProbability, pColors) {
@@ -32,34 +34,49 @@ var CowboysSlots = /** @class */ (function (_super) {
         return this.colors = pColors;
     };
     CowboysSlots.prototype.playCowboySlot = function (betAmount, player) {
-        this.getColors();
-        console.log(this.colors);
-        var a = Math.floor(Math.random() * this.colors.length);
-        var b = Math.floor(Math.random() * this.colors.length);
-        var c = Math.floor(Math.random() * this.colors.length);
-        if (a === b && a === c) {
-            var result = betAmount * 2;
-            console.log('Te toco: ' + this.colors[a] + ', ' + this.colors[b] + ', ' + this.colors[c]);
-            console.log('Ganaste: ' + result);
-            player.setCashAmount(player.getCashAmount() + result);
+        if (this.betMin > betAmount) {
+            console.log('La apuesta minima es de: ' + this.betMin);
         }
         else {
-            console.log('Te toco: ' + this.colors[a] + ', ' + this.colors[b] + ', ' + this.colors[c]);
-            console.log('Perdiste: ' + betAmount);
-            player.setCashAmount(player.getCashAmount() - betAmount);
+            var readMe = fs.readFileSync('./src/games/slotmachines/data/cowboys/slotCowboys.txt', 'utf8');
+            console.log(readMe);
+            this.getColors();
+            console.log(this.colors);
+            var a = Math.floor(Math.random() * this.colors.length);
+            var b = Math.floor(Math.random() * this.colors.length);
+            var c = Math.floor(Math.random() * this.colors.length);
+            if (a === b && a === c) {
+                var result = betAmount * 2;
+                console.log('-------------------------');
+                console.log('Te toco: ' + this.colors[a] + ', ' + this.colors[b] + ', ' + this.colors[c]);
+                console.log('Ganaste: ' + result);
+                console.log('-------------------------');
+                player.setCashAmount(player.getCashAmount() + result);
+                fs.writeFileSync('./src/games/slotmachines/data/cowboys/cowboysStatistics.txt', result.toString());
+            }
+            else {
+                console.log('-------------------------');
+                console.log('Te toco: ' + this.colors[a] + ', ' + this.colors[b] + ', ' + this.colors[c]);
+                console.log('Perdiste: ' + betAmount);
+                console.log('-------------------------');
+                player.setCashAmount(player.getCashAmount() - betAmount);
+                fs.writeFileSync('./src/games/slotmachines/data/cowboys/cowboysStatistics.txt', betAmount.toString());
+            }
+            this.sideBet(betAmount, player);
         }
-        this.sideBet(betAmount, player);
     };
     CowboysSlots.prototype.sideBet = function (betAmount, player) {
         var x = Math.floor(Math.random() * 10);
         if (x === 4) {
             var result = betAmount + 1000;
             player.setCashAmount(player.getCashAmount() + result);
-            return console.log('Gano la apuesta secundaria. Gano: ' + betAmount);
+            fs.writeFileSync('./src/games/slotmachines/data/cowboys/cowboysStatistics.txt', result.toString());
+            console.log('Gano la apuesta secundaria. Gano: ' + betAmount);
+            console.log('-------------------------');
         }
         else {
-            player.setCashAmount(player.getCashAmount() - betAmount);
-            return console.log('Perdio la apuesta secundaria. Perdio: ' + betAmount);
+            console.log('Perdio la apuesta secundaria.');
+            console.log('-------------------------');
         }
     };
     return CowboysSlots;

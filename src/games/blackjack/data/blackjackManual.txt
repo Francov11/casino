@@ -1,0 +1,2 @@
+En este juego se te dan dos valores aleatorios y si es menor a 21 tienes la oportunidad de pedir otra carta.
+En caso de que sea menor a 21 devuelta, la apuesta se considera perdida. 

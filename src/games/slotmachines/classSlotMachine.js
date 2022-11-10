@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.SlotMachine = void 0;
+//Clase slotmachine padre
 var SlotMachine = /** @class */ (function () {
     function SlotMachine(pTheme, pBetMin, pWinProbability) {
         this.theme = pTheme;

@@ -18,6 +18,7 @@ exports.__esModule = true;
 exports.PiratesSlots = void 0;
 var fs = require('fs');
 var classSlotMachine_1 = require("./classSlotMachine");
+//Clase piratas slotmachine
 var PiratesSlots = /** @class */ (function (_super) {
     __extends(PiratesSlots, _super);
     function PiratesSlots(pTheme, pBetMin, pWinProbability) {
@@ -25,11 +26,13 @@ var PiratesSlots = /** @class */ (function (_super) {
     }
     ;
     PiratesSlots.prototype.playPiratesSlot = function (betAmount, player) {
-        fs.readFileSync('./data/slotManual.txt', 'utf8');
         if (this.betMin > betAmount) {
-            console.log('La apuesta inicial es de: ' + this.betMin);
+            console.log('La apuesta minima es de: ' + this.betMin);
         }
         else {
+            var readMe = fs.readFileSync('./src/games/slotmachines/data/pirates/slotPirates.txt', 'utf8');
+            console.log(readMe);
+            console.log('-------------------------');
             var a = Math.floor(Math.random() * 11);
             var b = Math.floor(Math.random() * 11);
             var c = Math.floor(Math.random() * 11);
@@ -37,12 +40,16 @@ var PiratesSlots = /** @class */ (function (_super) {
                 console.log('Te toco: ' + a + ', ' + b + ', ' + c);
                 var result = betAmount * 2;
                 console.log('Ganaste: ' + result);
+                console.log('-------------------------');
                 player.setCashAmount(player.getCashAmount() + result);
+                fs.writeFileSync('./src/games/slotmachines/data/pirates/piratesStatistics.txt', result.toString());
             }
             else {
                 console.log('Te toco: ' + a + ', ' + b + ', ' + c);
                 console.log('Perdiste: ' + betAmount);
+                console.log('-------------------------');
                 player.setCashAmount(player.getCashAmount() - betAmount);
+                fs.writeFileSync('./src/games/slotmachines/data/pirates/piratesStatistics.txt', betAmount.toString());
             }
         }
     };
